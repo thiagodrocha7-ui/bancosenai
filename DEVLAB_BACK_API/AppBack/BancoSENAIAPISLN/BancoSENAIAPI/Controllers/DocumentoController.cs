@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Reflection.Metadata;
 
 namespace BancoSENAIAPI.Controllers
 {
@@ -38,6 +39,19 @@ namespace BancoSENAIAPI.Controllers
             {
                 await arquivo.CopyToAsync(stream);
             }
+
+            var documentoMetadados = new Models.DocumentoMetadado
+            {
+                Id = _nextId,
+                Name = nomeOriginal,
+                Extensao = extensao,
+                Caminho = caminhoFinal,
+                CodigoCliente = codigoCliente,
+            };
+
+            _documentosMetadados.Add(documentoMetadados);
+
+            return Ok(new { mensagem = "Documento anexado com sucesso", arquivoSalvo = novoNome });
 
         }
 
