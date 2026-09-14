@@ -8,7 +8,6 @@ namespace BancoSENAIAPI.Controllers
     public class DocumentoController : Controller
     {
         private readonly string _caminhoRaiz = Path.Combine(
-<<<<<<< Updated upstream
            Directory.GetCurrentDirectory(),
            "ClienteArquivos"
        );
@@ -56,18 +55,23 @@ namespace BancoSENAIAPI.Controllers
 
         }
 
+        [HttpGet("api/v1/documento/listar/{codigoCliente}")]
+        public IActionResult Listar(int codigoCliente)
+        {
+            
+            var documentos = _documentosMetadados
+                .Where(d => d.CodigoCliente == codigoCliente)
+                .ToList();
 
+            
+            if (!documentos.Any())
+            {
+                return NotFound(); 
+            }
 
-=======
-            Directory.GetCurrentDirectory(),
-        "ClienteArquivos"
-            );
+          
+            return Ok(documentos);
+        }
 
-        private static List<Models.DocumentoMetadado> _documentosMetadados = new List<Models.DocumentoMetadado>();
-
-        private static int _nextId = 1;
-        
-        
->>>>>>> Stashed changes
     }
 }
