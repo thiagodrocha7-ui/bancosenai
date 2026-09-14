@@ -8,7 +8,6 @@ namespace BancoSENAIAPI.Controllers
     public class DocumentoController : Controller
     {
         private readonly string _caminhoRaiz = Path.Combine(
-<<<<<<< Updated upstream
            Directory.GetCurrentDirectory(),
            "ClienteArquivos"
        );
@@ -56,18 +55,70 @@ namespace BancoSENAIAPI.Controllers
 
         }
 
+        [HttpGet("api/v1/documento/listar/{codigoCliente}")]
+        public IActionResult Listar(int codigoCliente)
+        {
+            
+            var documentos = _documentosMetadados
+                .Where(d => d.CodigoCliente == codigoCliente)
+                .ToList();
+
+            
+            if (!documentos.Any())
+            {
+                return NotFound(); 
+            }
+
+          
+            return Ok(documentos);
+        }
+
+        [HttpGet("api/v1/documento/download/{id}")]
+        public IActionResult Download(int id)
+        {
+            
+            var documento = _documentosMetadados
+                .FirstOrDefault(d => d.Id == id);
+
+            
+            if (documento == null)
+            {
+                return NotFound();
+            }
+
+           
+            byte[] fileBytes = System.IO.File.ReadAllBytes(documento.Caminho);
+
+            
+            return File(fileBytes, "application/octet-stream", documento.Name);
+        }
+
+        [HttpDelete("api/v1/documento/excluir/{id}")]
+        public IActionResult Excluir(int id)
+        {
+            
+            var documento = _documentosMetadados
+                .FirstOrDefault(d => d.Id == id);
+
+            
+            if (documento == null)
+            {
+                return NotFound();
+            }
+
+         
+            if (System.IO.File.Exists(documento.Caminho))
+            {
+                System.IO.File.Delete(documento.Caminho);
+            }
+
+           
+            _documentosMetadados.Remove(documento);
+
+            
+            return Ok(new { mensagem = "Documento removido com sucesso." });
+        }
 
 
-=======
-            Directory.GetCurrentDirectory(),
-        "ClienteArquivos"
-            );
-
-        private static List<Models.DocumentoMetadado> _documentosMetadados = new List<Models.DocumentoMetadado>();
-
-        private static int _nextId = 1;
-        
-        
->>>>>>> Stashed changes
     }
 }
