@@ -99,3 +99,31 @@ async function excluirArquivo(documentoId, clientId) {
         alert("Erro ao excluir o arquivo.");
     }
 }
+
+document.getElementById("formUpload").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const clientId = document.getElementById("clientIdUpload").value;
+    const fileInput = document.getElementById("fileInput").files[0];
+
+    const formData = new FormData();
+    formData.append("clienteId", clientId);
+    formData.append("arquivo", fileInput);
+
+    try {
+        const response = await fetch(`${API_URL}/upload`, {
+            method: "POST",
+            body: formData
+        });
+
+        if (response.ok) {
+            alert("Documento enviado com sucesso!");
+
+            // Sincroniza o campo de busca e atualiza a tabela automaticamente
+            document.getElementById("searchClientId").value = clientId;
+            buscarDocumentos(clientId);
+        }
+    } catch (error) {
+        alert("Erro ao enviar arquivo.");
+    }
+});
