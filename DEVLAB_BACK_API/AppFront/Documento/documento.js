@@ -67,3 +67,20 @@ document.getElementById("btnBuscar").addEventListener("click", () => {
     const clientId = document.getElementById("searchClientId").value;
     buscarDocumentos(clientId);
 });
+
+async function baixarArquivo(documentoId, nomeArquivo) {
+    try {
+        const response = await fetch(`${API_URL}/download/${documentoId}`);
+        const blob = await response.blob();
+
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = nomeArquivo;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    } catch (error) {
+        alert("Erro ao baixar o arquivo.");
+    }
+}
