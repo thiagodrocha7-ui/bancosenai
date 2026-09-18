@@ -84,3 +84,18 @@ async function baixarArquivo(documentoId, nomeArquivo) {
         alert("Erro ao baixar o arquivo.");
     }
 }
+
+async function excluirArquivo(documentoId, clientId) {
+    if (!confirm("Tem certeza que deseja excluir este documento?")) return;
+
+    try {
+        const response = await fetch(`${API_URL}/${documentoId}`, { method: 'DELETE' });
+
+        if (response.ok) {
+            alert("Arquivo excluído com sucesso!");
+            buscarDocumentos(clientId); // Atualização automática imediata
+        }
+    } catch (error) {
+        alert("Erro ao excluir o arquivo.");
+    }
+}
