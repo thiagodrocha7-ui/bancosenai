@@ -28,3 +28,42 @@ async function enviarDocumento() {
 
     }
 }
+
+const API_URL = "https://bancosenai.com"; // Substitua pela URL real da API
+
+async function buscarDocumentos(clientId) {
+    if (!clientId) return alert("Informe o código do cliente.");
+
+    try {
+        const response = await fetch(`${API_URL}?clienteId=${clientId}`);
+        const documentos = await response.json();
+
+        renderizarTabela(documentos);
+    } catch (error) {
+        console.error("Erro ao buscar documentos:", error);
+    }
+}
+
+function renderizarTabela(documentos) {
+    const tbody = document.getElementById("tabelaDocumentos");
+    tbody.innerHTML = "";
+
+    documentos.forEach(doc => {
+        tbody.innerHTML += `
+      <tr>
+        <td>${doc.id}</td>
+        <td>${doc.nome}</td>
+        <td>${doc.extensao}</td>
+        <td>
+          <button class="btn-baixar" onclick="baixarArquivo(${doc.id}, '${doc.nome}')" style="background-color: yellow; color: black;">Baixar</button>
+          <button class="btn-excluir" onclick="excluirArquivo(${doc.id}, '${doc.clienteId}')" style="background-color: red; color: white;">Excluir</button>
+        </td>
+      </tr>
+    `;
+    });
+}
+
+document.getElementById("btnBuscar").addEventListener("click", () => {
+    const clientId = document.getElementById("searchClientId").value;
+    buscarDocumentos(clientId);
+});

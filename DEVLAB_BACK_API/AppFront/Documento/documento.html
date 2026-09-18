@@ -16,5 +16,37 @@
     </div>
 
     <script src="documento.js"></script>
+
+    <div class="container">
+        <h2>Gerenciamento de Documentos - Banco Senai</h2>
+
+        <form id="formUpload">
+            <input type="text" id="clientIdUpload" placeholder="Código do Cliente" required />
+            <input type="file" id="fileInput" required />
+            <button type="submit">Enviar</button>
+        </form>
+
+        <hr>
+
+        <div class="busca-container">
+            <input type="text" id="searchClientId" placeholder="Digitar Código do Cliente" />
+            <button id="btnBuscar">Buscar Documentos</button>
+        </div>
+
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>Extensão</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaDocumentos">
+            </tbody>
+        </table>
+    </div>
+
 </body>
 </html>
