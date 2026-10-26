@@ -28,7 +28,7 @@ namespace BancoSENAIAPI.Controllers
 
             if (!Directory.Exists(pastaCliente))
             {
-                Directory.CreateDirectory(pastaCliente);
+                Directory.CreateDirectory(pastaCliente);    
             }
             string extensao = Path.GetExtension(pastaCliente);
             string nomeOriginal = Path.GetFileNameWithoutExtension(arquivo.FileName);
@@ -116,7 +116,7 @@ namespace BancoSENAIAPI.Controllers
             _documentosMetadados.Remove(documento);
 
             
-            return Ok(new { mensagem = "Documento removido com sucesso." });
+            return Ok(new { mensagem = "Documento removido com sucesso!" });
         }
 
 
